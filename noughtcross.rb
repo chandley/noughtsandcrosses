@@ -33,13 +33,26 @@ class Board
 		puts "-------"
 	end
 
-	def check_3_in_row
-	   victor_status = nil
-	   #@rows.each {|row| victor_status = squares.first.status if (squares.each {|square| square.status}).uniq.length == 1 } # return player if rows match
+	def check_3_in_row # this routine is not pretty!
+	   victor = nil
+	   @rows.each do |row|  # check rows
+	   	  if (row.squares[0].status == row.squares[1].status && row.squares[1].status == row.squares[2].status)
+	   	  	return victor = row.squares[0].status 
+	   	  end
+	   	end
+	   	(0..2).each do |c|
+	   		if rows[0].squares[c].status == rows[1].squares[c].status && rows[1].squares[c].status = rows[2].squares[c].status
+	   			return victor = rows[0].squares[c].status 
+	   		end
+	   	end
+	   	if rows[0].squares[0].status == rows[1].squares[1].status && rows[1].squares[1].status = rows[2].squares[2].status
+	   		return victor = rows[0].squares[c].status 
+	   	end
+	   	if rows[0].squares[2].status == rows[1].squares[1].status && rows[1].squares[1].status = rows[2].squares[0].status
+	   		return victor = rows[0].squares[c].status 
+	   	end
 
-	   #check cols
-	   #check diags
-	   return victor_status
+	   return victor
 	end
 end
 
@@ -75,9 +88,9 @@ class Game
 
 	def test_victory
 		if board.check_3_in_row.nil? 
-			puts 'continue'
+			'continue'
 		else 
-			puts "winner #{board.check_3_in_row.status.name}"
+			"winner #{board.check_3_in_row.name}"
 		end
 	end
 end
@@ -89,13 +102,13 @@ my_game = Game.new bob, mike
 
 my_game.board.show
 
-my_game.play 1,0,bob
+my_game.play 2,0,bob
 my_game.play 0,2, mike
 my_game.board.show
-my_game.test_victory
-my_game.play 1,1,bob
-my_game.play 1,2,bob
+puts my_game.test_victory
+my_game.play 1,0,bob
+my_game.play 0,0,bob
 my_game.board.show
-my_game.test_victory
+puts my_game.test_victory
 
 
