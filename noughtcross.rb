@@ -71,10 +71,10 @@ end
 
 
 class Game
-	attr_accessor :board
+	attr_accessor :board, :players
 	def initialize (player1, player2)
 		@board = Board.new
-		@player1, @player2 = player1, player2
+		@players = [player1, player2]
 
 	end
 
@@ -82,7 +82,7 @@ class Game
 		if @board.rows[row].squares[column].status.nil?
 		   @board.rows[row].squares[column].status = player
 		else
-		  return 'play again'
+		  return nil
 		end
 	end
 
@@ -100,15 +100,22 @@ bob = Player.new ('bob')
 
 my_game = Game.new bob, mike
 
-my_game.board.show
+loop do # add board is full check
+	my_game.players.each do |player|
+		puts "Player #{player.name} please enter row"
+		row = gets.chomp.to_i
+		puts 
+		puts "Player #{player.name} please enter column"
+		col = gets.chomp.to_i
+		my_game.play(row,col,player)
+		my_game.board.show
+		if my_game.test_victory != 'continue'
+			puts my_game.test_victory
+			break
+		end
+	end
+end
 
-my_game.play 2,0,bob
-my_game.play 0,2, mike
-my_game.board.show
-puts my_game.test_victory
-my_game.play 1,0,bob
-my_game.play 0,0,bob
-my_game.board.show
-puts my_game.test_victory
+
 
 
