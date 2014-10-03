@@ -1,31 +1,27 @@
 class Square
-	attr_accessor :status
+	attr_accessor :owner
 	def initialize		
-		@status = nil
-	end
-end
-
-class Row
-	attr_accessor :squares
-	def initialize
-		@squares = []
-		(0..2).each {@squares.push Square.new}
+		@owner = nil
 	end
 end
 
 class Board
-	attr_accessor :rows
+	attr_accessor :squares
 	def initialize
-		@rows = []
-		(0..2).each {@rows.push Row.new}
+		@squares = []
+		(0..2).each do |row|
+			row = []
+			(0..2).each {|col| row.push Square.new}
+			@squares.push row
+		end
 	end
-
+			
 	def show
-		@rows.each do |row|
+		@squares.each do |row|
 			puts "-------"
 			print "|"
-			row.squares.each do |square|
-				print square.status.token rescue print '-'   # show '-' if status is nil
+			row.each do |square|
+				print square.owner.token rescue print '-'   # show '-' if owner is nil
 				print '|'
 			end
 			puts ''
@@ -33,27 +29,14 @@ class Board
 		puts "-------"
 	end
 
-	def check_3_in_row # this routine is not pretty!
-	   victor = nil
-	   @rows.each do |row|  # check rows
-	   	  if (row.squares[0].status == row.squares[1].status && row.squares[1].status == row.squares[2].status)
-	   	  	return victor = row.squares[0].status 
-	   	  end
-	   	end
-	   	(0..2).each do |c|
-	   		if rows[0].squares[c].status == rows[1].squares[c].status && rows[1].squares[c].status = rows[2].squares[c].status
-	   			return victor = rows[0].squares[c].status 
-	   		end
-	   	end
-	   	if rows[0].squares[0].status == rows[1].squares[1].status && rows[1].squares[1].status = rows[2].squares[2].status
-	   		return victor = rows[0].squares[c].status 
-	   	end
-	   	if rows[0].squares[2].status == rows[1].squares[1].status && rows[1].squares[1].status = rows[2].squares[0].status
-	   		return victor = rows[0].squares[c].status 
-	   	end
-
-	   return victor
+	def check_3_in_row
+	squares.each do |row|
+		return row.first.owner if  row.map{|square| square.owner}.uniq.length == 1 
 	end
+	(0..squares.first.count).each do |col_index|
+		col = squares.each {|row| row[col_index]}
+		return col.first.owner if  col.map{|square| square.owner}.uniq.length == 1  rescue break
+	end	
 end
 
 class Player 
@@ -65,11 +48,6 @@ class Player
 	end
 end
 
-
-
-
-
-
 class Game
 	attr_accessor :board, :players
 	def initialize (player1, player2)
@@ -79,8 +57,8 @@ class Game
 	end
 
 	def play (row, column, player)
-		if @board.rows[row].squares[column].status.nil?
-		   @board.rows[row].squares[column].status = player
+		if @board.squares[row][column].owner.nil?
+		   @board.squares[row][column].owner = player
 		else
 		  return nil
 		end
@@ -100,6 +78,10 @@ bob = Player.new ('bob')
 
 my_game = Game.new bob, mike
 
+my_game.board.show
+
+
+
 loop do # add board is full check
 	my_game.players.each do |player|
 		puts "Player #{player.name} please enter row"
@@ -115,7 +97,4 @@ loop do # add board is full check
 		end
 	end
 end
-
-
-
-
+end
