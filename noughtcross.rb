@@ -5,19 +5,19 @@ class Square
 	end
 end
 
-class Board
+class Board 
 	attr_accessor :squares
-	def initialize
+	def initialize (size = 3)
 		@squares = []
-		(0..2).each do |row|
+		(0..size-1).each do |row|
 			row = []
-			(0..2).each {|col| row.push Square.new}
+			(0..size-1).each {|col| row.push Square.new}
 			@squares.push row
 		end
 	end
 			
 	def show
-		@squares.each do |row|
+		squares.each do |row|
 			puts "-------"
 			print "|"
 			row.each do |square|
@@ -30,13 +30,35 @@ class Board
 	end
 
 	def check_3_in_row
-	squares.each do |row|
-		return row.first.owner if  row.map{|square| square.owner}.uniq.length == 1 
+
+		squares.each do |row| # check row
+			return row.first.owner if  row.map{|square| square.owner}.uniq.length == 1 
+		end
+		
+		#(0..squares.first.count).each |col_index| # check col
+		(0..2).each do |col_index|
+		  col = []
+			squares.each {|row| col.push row[col_index].owner} 
+			return col.first if  col.uniq.length == 1
+		end	
 	end
-	(0..squares.first.count).each do |col_index|
-		col = squares.each {|row| row[col_index]}
-		return col.first.owner if  col.map{|square| square.owner}.uniq.length == 1  rescue break
-	end	
+
+  # check diagonals
+  diagonals = [  [ squares[0][0], squares[1][1], squares[2][2] ],
+					 		   [ squares[0][0], squares[1][1], squares[2][2] ]  ]
+
+	diagonals.each do |diagonal|
+  	if (diagonal.map {|square| square.owner}).uniq.length == 1
+			return diagonal.first.owner
+		end
+	end
+
+	#if ((squares[0][0].owner == squares[1][1].owner) && (squares[1][1].owner == squares[2][2].owner)) ||
+	 #  ((squares[2][0].owner == squares[1][1].owner) && (squares[1][1].owner == squares[0][2].owner))
+	 #  return squares[1][1].owner
+	 #end
+
+
 end
 
 class Player 
@@ -97,4 +119,5 @@ loop do # add board is full check
 		end
 	end
 end
-end
+
+
