@@ -29,36 +29,32 @@ class Board
 		puts "-------"
 	end
 
+	def check_line_winner (*squares)
+		owners = squares.map {|square| square.owner}.uniq
+		if owners.length == 1
+			return owners.first
+		else
+			return nil
+		end
+	end
+
 	def check_3_in_row
-
 		squares.each do |row| # check row
-			return row.first.owner if  row.map{|square| square.owner}.uniq.length == 1 
+			winner = check_line_winner(*row) 
+			return winner unless winner.nil?
 		end
+		(0..squares.length-1).each do |column|
+#		(0..2).each do |column|
+			winner = check_line_winner(squares[0][column], squares[1][column], squares[2][column])
+			return winner unless winner.nil?
+		end
+		winner = check_line_winner(squares[0][0], squares[1][1], squares[2][2])
+		return winner unless winner.nil?
+		winner = check_line_winner(squares[2][0], squares[1][1], squares[0][2])
+		return winner unless winner.nil?
+		return nil
+	end
 		
-		#(0..squares.first.count).each |col_index| # check col
-		(0..2).each do |col_index|
-		  col = []
-			squares.each {|row| col.push row[col_index].owner} 
-			return col.first if  col.uniq.length == 1
-		end	
-	end
-
-  # check diagonals
-  diagonals = [  [ squares[0][0], squares[1][1], squares[2][2] ],
-					 		   [ squares[0][0], squares[1][1], squares[2][2] ]  ]
-
-	diagonals.each do |diagonal|
-  	if (diagonal.map {|square| square.owner}).uniq.length == 1
-			return diagonal.first.owner
-		end
-	end
-
-	#if ((squares[0][0].owner == squares[1][1].owner) && (squares[1][1].owner == squares[2][2].owner)) ||
-	 #  ((squares[2][0].owner == squares[1][1].owner) && (squares[1][1].owner == squares[0][2].owner))
-	 #  return squares[1][1].owner
-	 #end
-
-
 end
 
 class Player 
