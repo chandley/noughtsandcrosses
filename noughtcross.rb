@@ -15,8 +15,14 @@ class Board
 			@squares.push row
 		end
 	end
-			
+		
+	def blank_squares
+		2
+	#	squares.count {|square| square.owner.nil?}
+	end
+
 	def show
+		puts "blank squares #{self.blank_squares}"
 		squares.each do |row|
 			puts "-------"
 			print "|"
@@ -43,11 +49,12 @@ class Board
 			winner = check_line_winner(*row) 
 			return winner unless winner.nil?
 		end
-		(0..squares.length-1).each do |column|
-#		(0..2).each do |column|
+		(0..squares.length-1).each do |column| #check col
 			winner = check_line_winner(squares[0][column], squares[1][column], squares[2][column])
+#			winner = check_line_winner(*squares.each {|row| row[column]}.to_a) not working
 			return winner unless winner.nil?
 		end
+		#check diagonals
 		winner = check_line_winner(squares[0][0], squares[1][1], squares[2][2])
 		return winner unless winner.nil?
 		winner = check_line_winner(squares[2][0], squares[1][1], squares[0][2])
@@ -67,11 +74,27 @@ class Player
 end
 
 class Game
-	attr_accessor :board, :players
+	attr_accessor :board, :players, :winner
 	def initialize (player1, player2)
 		@board = Board.new
 		@players = [player1, player2]
-
+		@winner = nil
+	end
+  
+	def move player
+		played_square = nil
+		while played_square == nil do
+			puts "Player #{player.name} please enter row"
+			row = gets.chomp.to_i
+			puts 
+			puts "Player #{player.name} please enter column"
+			column = gets.chomp.to_i			
+			puts "Can't play there - try again" unless played_square = play(row, column, player)
+		end
+		@winner = board.check_3_in_row
+		if @winner.nil? == false
+			"winner #{winner}"
+		end
 	end
 
 	def play (row, column, player)
@@ -96,24 +119,20 @@ bob = Player.new ('bob')
 
 my_game = Game.new bob, mike
 
-my_game.board.show
 
-
-
-loop do # add board is full check
+while my_game.winner.nil? && my_game.board.blank_squares > 0
 	my_game.players.each do |player|
-		puts "Player #{player.name} please enter row"
-		row = gets.chomp.to_i
-		puts 
-		puts "Player #{player.name} please enter column"
-		col = gets.chomp.to_i
-		my_game.play(row,col,player)
 		my_game.board.show
-		if my_game.test_victory != 'continue'
-			puts my_game.test_victory
-			break
-		end
+		my_game.move player 
+		break unless my_game.winner.nil?
+	end
+	my_game.board.show
+	if my_game.winner.nil?
+		puts "stalemate"
+	else
+		puts "congratulations #{my_game.winner.name} - you are the winner" 
 	end
 end
+
 
 
