@@ -17,12 +17,19 @@ class Board
 	end
 		
 	def blank_squares
-		2
-	#	squares.count {|square| square.owner.nil?}
+		blanks = 0
+		@squares.each do |row|
+			row.each do |square| 
+				if square.owner.nil? 
+				 blanks += 1 
+				end
+			end
+		end
+		blanks
 	end
 
 	def show
-		puts "blank squares #{self.blank_squares}"
+		puts "blank squares #{blank_squares}"
 		squares.each do |row|
 			puts "-------"
 			print "|"
@@ -120,11 +127,11 @@ bob = Player.new ('bob')
 my_game = Game.new bob, mike
 
 
-while my_game.winner.nil? && my_game.board.blank_squares > 0
+while my_game.winner.nil? && my_game.board.blank_squares >= 1 do
 	my_game.players.each do |player|
 		my_game.board.show
 		my_game.move player 
-		break unless my_game.winner.nil?
+		break unless my_game.winner.nil? && my_game.board.blank_squares >= 1 # clumsy to repeat test
 	end
 	my_game.board.show
 	if my_game.winner.nil?
