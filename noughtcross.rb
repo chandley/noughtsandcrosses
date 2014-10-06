@@ -52,7 +52,7 @@ class Board
 		end
 	end
 
-	def check_3_in_row
+	def check_3_in_row_old
 		squares.each do |row| # check rows
 			winner = check_line_winner(*row) 
 			return winner unless winner.nil?
@@ -63,12 +63,46 @@ class Board
 			winner = check_line_winner(*col_squares)
 			return winner unless winner.nil?
 		end
-		#check diagonals
-		winner = check_line_winner(squares[0][0], squares[1][1], squares[2][2])
-		return winner unless winner.nil?
-		winner = check_line_winner(squares[2][0], squares[1][1], squares[0][2])
-		return winner unless winner.nil?
-		return nil
+		
+		if squares.length % 2 == 1 #  diagonals exist if play size is odd
+			diagonal_down, diagonal_up = [],[]
+			(0..squares.length-1).each do |i|
+				diagonal_down.push squares[i][i]
+				diagonal_up.push squares[squares.length-1-i][i]				
+			end
+			winner = check_line_winner(*diagonal_down) || check_line_winner(*diagonal_up)
+			return winner unless winner.nil?
+		end
+
+		return nil	# no winner
+
+	end
+
+	def check_3_in_row
+		check_array = [] # don't really need to create each time
+		squares.each {|row| check_array.push row}
+	
+		(0..squares.length-1).each do |column| # check columns
+			col_squares = []
+			squares.each {|row| col_squares.push row[column]}
+			check_array.push col_squares
+		end
+		
+		if squares.length % 2 == 1 #  diagonals exist if play size is odd
+			diagonal_down, diagonal_up = [],[]
+			(0..squares.length-1).each do |i|
+				diagonal_down.push squares[i][i]
+				diagonal_up.push squares[squares.length-1-i][i]				
+			end
+			check_array.push diagonal_up,	diagonal_down
+		end
+
+		check_array.each do |line|	
+			 winner = check_line_winner(*line) 
+			 return winner unless winner.nil?
+		end
+		return nil	# no winner
+
 	end
 		
 end
@@ -104,7 +138,7 @@ class Game
 		@winner = board.check_3_in_row
 	end
 
-	def play (row, column, player) 
+	def play (row, column, player) # does this need a separate function?
 		if @board.squares[row][column].owner.nil?
 		   @board.squares[row][column].owner = player
 		else
