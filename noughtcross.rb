@@ -86,9 +86,10 @@ class Game
 	attr_accessor :board, :players, :winner
 	def initialize (player1, player2)
 		@board = Board.new
+		if player1.token == player2.token then player2.token.downcase! end
 		@players = [player1, player2]
 		@winner = nil
-#		if players.map {|player| player.name}.uniq == 1 then players.last.name.downcase end
+		
 	end
   
 	def move player
