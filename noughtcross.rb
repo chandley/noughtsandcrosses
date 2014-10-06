@@ -1,5 +1,6 @@
 class Square
 	attr_accessor :owner
+
 	def initialize		
 		@owner = nil
 	end
@@ -7,6 +8,7 @@ end
 
 class Board 
 	attr_accessor :squares
+
 	def initialize (size = 3)
 		@squares = []
 		(0..size-1).each do |row|
@@ -16,7 +18,7 @@ class Board
 		end
 	end
 		
-	def blank_squares
+	def blank_squares # count blank squares
 		blanks = 0
 		@squares.each do |row|
 			row.each do |square| 
@@ -28,8 +30,7 @@ class Board
 		blanks
 	end
 
-	def show
-		puts "blank squares #{blank_squares}"
+	def show 
 		squares.each do |row|
 			puts "-------"
 			print "|"
@@ -42,7 +43,7 @@ class Board
 		puts "-------"
 	end
 
-	def check_line_winner (*squares)
+	def check_line_winner (*squares) 
 		owners = squares.map {|square| square.owner}.uniq
 		if owners.length == 1
 			return owners.first
@@ -52,13 +53,14 @@ class Board
 	end
 
 	def check_3_in_row
-		squares.each do |row| # check row
+		squares.each do |row| # check rows
 			winner = check_line_winner(*row) 
 			return winner unless winner.nil?
 		end
-		(0..squares.length-1).each do |column| #check col
-			winner = check_line_winner(squares[0][column], squares[1][column], squares[2][column])
-#			winner = check_line_winner(*squares.each {|row| row[column]}.to_a) not working
+		(0..squares.length-1).each do |column| # check columns
+			col_squares = []
+			squares.each {|row| col_squares.push row[column]}
+			winner = check_line_winner(*col_squares)
 			return winner unless winner.nil?
 		end
 		#check diagonals
@@ -76,7 +78,7 @@ class Player
 	def initialize (name)
 		@name = name
 		@score = 0
-		@token = @name[0].upcase
+		@token = @name[0].upcase # this is what we show on board
 	end
 end
 
@@ -86,6 +88,7 @@ class Game
 		@board = Board.new
 		@players = [player1, player2]
 		@winner = nil
+#		if players.map {|player| player.name}.uniq == 1 then players.last.name.downcase end
 	end
   
 	def move player
@@ -93,39 +96,27 @@ class Game
 		while played_square == nil do
 			puts "Player #{player.name} please enter row"
 			row = gets.chomp.to_i
-			puts 
 			puts "Player #{player.name} please enter column"
 			column = gets.chomp.to_i			
 			puts "Can't play there - try again" unless played_square = play(row, column, player)
 		end
 		@winner = board.check_3_in_row
-		if @winner.nil? == false
-			"winner #{winner}"
-		end
 	end
 
-	def play (row, column, player)
+	def play (row, column, player) 
 		if @board.squares[row][column].owner.nil?
 		   @board.squares[row][column].owner = player
 		else
-		  return nil
-		end
-	end
-
-	def test_victory
-		if board.check_3_in_row.nil? 
-			'continue'
-		else 
-			"winner #{board.check_3_in_row.name}"
+		  return nil # square already taken
 		end
 	end
 end
 
+#################main loop ###################################
 mike = Player.new ('mike')
 bob = Player.new ('bob')
 
 my_game = Game.new bob, mike
-
 
 while my_game.winner.nil? && my_game.board.blank_squares >= 1 do
 	my_game.players.each do |player|
@@ -133,13 +124,10 @@ while my_game.winner.nil? && my_game.board.blank_squares >= 1 do
 		my_game.move player 
 		break unless my_game.winner.nil? && my_game.board.blank_squares >= 1 # clumsy to repeat test
 	end
-	my_game.board.show
-	if my_game.winner.nil?
-		puts "stalemate"
-	else
-		puts "congratulations #{my_game.winner.name} - you are the winner" 
-	end
 end
-
-
-
+my_game.board.show
+if my_game.winner.nil?
+	puts "stalemate"
+else
+	puts "congratulations #{my_game.winner.name} - you are the winner" 
+end
