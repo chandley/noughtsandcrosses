@@ -1,0 +1,420 @@
+Last login: Thu Nov  6 19:01:40 on ttys000
+Chriss-MacBook-Pro:~ chrishandley$ cd Challenges
+Chriss-MacBook-Pro:Challenges chrishandley$ mkdir Takeaway
+Chriss-MacBook-Pro:Challenges chrishandley$ cd Takeaway/
+Chriss-MacBook-Pro:Takeaway chrishandley$ ls
+Chriss-MacBook-Pro:Takeaway chrishandley$ subl .
+Chriss-MacBook-Pro:Takeaway chrishandley$ gem install twilio-ruby
+Fetching: jwt-1.0.0.gem (100%)
+ERROR:  While executing gem ... (Gem::FilePermissionError)
+    You don't have write permissions for the /Library/Ruby/Gems/2.0.0 directory.
+Chriss-MacBook-Pro:Takeaway chrishandley$ sudo install twilio-ruby
+Password:
+usage: install [-bCcpSsv] [-B suffix] [-f flags] [-g group] [-m mode]
+               [-o owner] file1 file2
+       install [-bCcpSsv] [-B suffix] [-f flags] [-g group] [-m mode]
+               [-o owner] file1 ... fileN directory
+       install -d [-v] [-g group] [-m mode] [-o owner] directory ...
+Chriss-MacBook-Pro:Takeaway chrishandley$ sudo gem install twilio-ruby
+Fetching: jwt-1.0.0.gem (100%)
+Successfully installed jwt-1.0.0
+Fetching: twilio-ruby-3.13.1.gem (100%)
+Successfully installed twilio-ruby-3.13.1
+2 gems installed
+Chriss-MacBook-Pro:Takeaway chrishandley$ mkdir lib
+Chriss-MacBook-Pro:Takeaway chrishandley$ mkdir spec
+Chriss-MacBook-Pro:Takeaway chrishandley$ cd lib
+Chriss-MacBook-Pro:lib chrishandley$ touch twilio_sandbox.rb
+Chriss-MacBook-Pro:lib chrishandley$ touch twilio.rb
+Chriss-MacBook-Pro:lib chrishandley$ cd ..
+Chriss-MacBook-Pro:Takeaway chrishandley$ ls
+lib		lib:twilio.rb	spec
+Chriss-MacBook-Pro:Takeaway chrishandley$ git init
+Initialized empty Git repository in /Users/chrishandley/Challenges/Takeaway/.git/
+Chriss-MacBook-Pro:Takeaway chrishandley$ git add lib/twilio.rb 
+Chriss-MacBook-Pro:Takeaway chrishandley$ git commit -m "Postbox setup with Twilio, sends test message"
+[master (root-commit) 50afa6a] Postbox setup with Twilio, sends test message
+ 1 file changed, 43 insertions(+)
+ create mode 100644 lib/twilio.rb
+Chriss-MacBook-Pro:Takeaway chrishandley$ git remote add origin git@github.com:chandley/takeaway.git
+Chriss-MacBook-Pro:Takeaway chrishandley$ git push -u origin master
+Counting objects: 4, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (4/4), 666 bytes | 0 bytes/s, done.
+Total 4 (delta 0), reused 0 (delta 0)
+To git@github.com:chandley/takeaway.git
+ * [new branch]      master -> master
+Branch master set up to track remote branch master from origin.
+Chriss-MacBook-Pro:Takeaway chrishandley$ git branch twilio
+Chriss-MacBook-Pro:Takeaway chrishandley$ git branch development
+Chriss-MacBook-Pro:Takeaway chrishandley$ git checkout twilio
+Switched to branch 'twilio'
+Chriss-MacBook-Pro:Takeaway chrishandley$ git status
+On branch twilio
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	lib/twilio_sandbox.rb
+	lib:twilio.rb
+
+nothing added to commit but untracked files present (use "git add" to track)
+Chriss-MacBook-Pro:Takeaway chrishandley$ git add lib/twilio.rb
+Chriss-MacBook-Pro:Takeaway chrishandley$ git checkout -m "works with generic message, requires refactor"
+error: pathspec 'works with generic message, requires refactor' did not match any file(s) known to git.
+Chriss-MacBook-Pro:Takeaway chrishandley$ git push
+fatal: The current branch twilio has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream origin twilio
+
+Chriss-MacBook-Pro:Takeaway chrishandley$ git push -u origin twilio
+Total 0 (delta 0), reused 0 (delta 0)
+To git@github.com:chandley/takeaway.git
+ * [new branch]      twilio -> twilio
+Branch twilio set up to track remote branch twilio from origin.
+Chriss-MacBook-Pro:Takeaway chrishandley$ git branch
+  development
+  master
+* twilio
+Chriss-MacBook-Pro:Takeaway chrishandley$ git add lib/twilio.rb
+Chriss-MacBook-Pro:Takeaway chrishandley$ git commit -m "postbox.post "hello" works, other methods made private"
+[twilio 9c59284] postbox.post hello works, other methods made private
+ 1 file changed, 20 insertions(+), 9 deletions(-)
+Chriss-MacBook-Pro:Takeaway chrishandley$ git push
+Counting objects: 7, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (4/4), 628 bytes | 0 bytes/s, done.
+Total 4 (delta 1), reused 0 (delta 0)
+To git@github.com:chandley/takeaway.git
+   50afa6a..9c59284  twilio -> twilio
+Chriss-MacBook-Pro:Takeaway chrishandley$ git checkout development
+Switched to branch 'development'
+Chriss-MacBook-Pro:Takeaway chrishandley$ git merge twilio
+Updating 50afa6a..9c59284
+Fast-forward
+ lib/twilio.rb | 29 ++++++++++++++++++++---------
+ 1 file changed, 20 insertions(+), 9 deletions(-)
+Chriss-MacBook-Pro:Takeaway chrishandley$ git push
+fatal: The current branch development has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream origin development
+
+Chriss-MacBook-Pro:Takeaway chrishandley$ git push -u origin development
+Total 0 (delta 0), reused 0 (delta 0)
+To git@github.com:chandley/takeaway.git
+ * [new branch]      development -> development
+Branch development set up to track remote branch development from origin.
+Chriss-MacBook-Pro:Takeaway chrishandley$ rspec
+/Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `load': /Users/chrishandley/Challenges/Takeaway/spec/dishes_spec.rb:7: syntax error, unexpected end-of-input, expecting :: or '[' or '.' (SyntaxError)
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `block in load_spec_files'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `each'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `load_spec_files'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:96:in `setup'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:84:in `run'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:69:in `run'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:37:in `invoke'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/exe/rspec:4:in `<top (required)>'
+	from /usr/bin/rspec:23:in `load'
+	from /usr/bin/rspec:23:in `<main>'
+Chriss-MacBook-Pro:Takeaway chrishandley$ rspec
+/Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `load': /Users/chrishandley/Challenges/Takeaway/spec/dishes_spec.rb:7: syntax error, unexpected end-of-input, expecting :: or '[' or '.' (SyntaxError)
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `block in load_spec_files'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `each'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `load_spec_files'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:96:in `setup'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:84:in `run'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:69:in `run'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:37:in `invoke'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/exe/rspec:4:in `<top (required)>'
+	from /usr/bin/rspec:23:in `load'
+	from /usr/bin/rspec:23:in `<main>'
+Chriss-MacBook-Pro:Takeaway chrishandley$ rspec
+/Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `load': /Users/chrishandley/Challenges/Takeaway/spec/dishes_spec.rb:7: syntax error, unexpected end-of-input, expecting :: or '[' or '.' (SyntaxError)
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `block in load_spec_files'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `each'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `load_spec_files'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:96:in `setup'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:84:in `run'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:69:in `run'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:37:in `invoke'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/exe/rspec:4:in `<top (required)>'
+	from /usr/bin/rspec:23:in `load'
+	from /usr/bin/rspec:23:in `<main>'
+Chriss-MacBook-Pro:Takeaway chrishandley$ rspec
+/Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `load': /Users/chrishandley/Challenges/Takeaway/spec/dishes_spec.rb:7: syntax error, unexpected end-of-input, expecting :: or '[' or '.' (SyntaxError)
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `block in load_spec_files'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `each'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `load_spec_files'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:96:in `setup'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:84:in `run'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:69:in `run'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:37:in `invoke'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/exe/rspec:4:in `<top (required)>'
+	from /usr/bin/rspec:23:in `load'
+	from /usr/bin/rspec:23:in `<main>'
+Chriss-MacBook-Pro:Takeaway chrishandley$ rspec
+/Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `load': /Users/chrishandley/Challenges/Takeaway/spec/dishes_spec.rb:7: syntax error, unexpected end-of-input, expecting :: or '[' or '.' (SyntaxError)
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `block in load_spec_files'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `each'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `load_spec_files'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:96:in `setup'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:84:in `run'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:69:in `run'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:37:in `invoke'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/exe/rspec:4:in `<top (required)>'
+	from /usr/bin/rspec:23:in `load'
+	from /usr/bin/rspec:23:in `<main>'
+Chriss-MacBook-Pro:Takeaway chrishandley$ rspec
+/Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `load': /Users/chrishandley/Challenges/Takeaway/spec/dishes_spec.rb:7: syntax error, unexpected end-of-input, expecting :: or '[' or '.' (SyntaxError)
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `block in load_spec_files'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `each'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `load_spec_files'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:96:in `setup'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:84:in `run'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:69:in `run'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:37:in `invoke'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/exe/rspec:4:in `<top (required)>'
+	from /usr/bin/rspec:23:in `load'
+	from /usr/bin/rspec:23:in `<main>'
+Chriss-MacBook-Pro:Takeaway chrishandley$ rspec
+/Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `load': /Users/chrishandley/Challenges/Takeaway/spec/dishes_spec.rb:7: syntax error, unexpected end-of-input, expecting :: or '[' or '.' (SyntaxError)
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `block in load_spec_files'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `each'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `load_spec_files'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:96:in `setup'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:84:in `run'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:69:in `run'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:37:in `invoke'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/exe/rspec:4:in `<top (required)>'
+	from /usr/bin/rspec:23:in `load'
+	from /usr/bin/rspec:23:in `<main>'
+Chriss-MacBook-Pro:Takeaway chrishandley$ rspec
+/Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `load': /Users/chrishandley/Challenges/Takeaway/spec/dishes_spec.rb:9: syntax error, unexpected end-of-input, expecting :: or '[' or '.' (SyntaxError)
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `block in load_spec_files'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `each'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `load_spec_files'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:96:in `setup'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:84:in `run'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:69:in `run'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:37:in `invoke'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/exe/rspec:4:in `<top (required)>'
+	from /usr/bin/rspec:23:in `load'
+	from /usr/bin/rspec:23:in `<main>'
+Chriss-MacBook-Pro:Takeaway chrishandley$ rspec
+/Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `load': /Users/chrishandley/Challenges/Takeaway/spec/dishes_spec.rb:9: syntax error, unexpected '\n', expecting :: or '[' or '.' (SyntaxError)
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `block in load_spec_files'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `each'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `load_spec_files'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:96:in `setup'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:84:in `run'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:69:in `run'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:37:in `invoke'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/exe/rspec:4:in `<top (required)>'
+	from /usr/bin/rspec:23:in `load'
+	from /usr/bin/rspec:23:in `<main>'
+Chriss-MacBook-Pro:Takeaway chrishandley$ rspec
+/Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `load': /Users/chrishandley/Challenges/Takeaway/spec/dishes_spec.rb:10: syntax error, unexpected end-of-input, expecting :: or '[' or '.' (SyntaxError)
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `block in load_spec_files'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `each'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `load_spec_files'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:96:in `setup'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:84:in `run'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:69:in `run'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:37:in `invoke'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/exe/rspec:4:in `<top (required)>'
+	from /usr/bin/rspec:23:in `load'
+	from /usr/bin/rspec:23:in `<main>'
+Chriss-MacBook-Pro:Takeaway chrishandley$ rspec
+/Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `load': /Users/chrishandley/Challenges/Takeaway/spec/dishes_spec.rb:12: syntax error, unexpected end-of-input, expecting :: or '[' or '.' (SyntaxError)
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `block in load_spec_files'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `each'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `load_spec_files'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:96:in `setup'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:84:in `run'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:69:in `run'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:37:in `invoke'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/exe/rspec:4:in `<top (required)>'
+	from /usr/bin/rspec:23:in `load'
+	from /usr/bin/rspec:23:in `<main>'
+Chriss-MacBook-Pro:Takeaway chrishandley$ rspec
+/Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `load': /Users/chrishandley/Challenges/Takeaway/spec/dishes_spec.rb:11: syntax error, unexpected end-of-input, expecting :: or '[' or '.' (SyntaxError)
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `block in load_spec_files'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `each'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `load_spec_files'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:96:in `setup'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:84:in `run'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:69:in `run'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:37:in `invoke'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/exe/rspec:4:in `<top (required)>'
+	from /usr/bin/rspec:23:in `load'
+	from /usr/bin/rspec:23:in `<main>'
+Chriss-MacBook-Pro:Takeaway chrishandley$ rspec
+/System/Library/Frameworks/Ruby.framework/Versions/2.0/usr/lib/ruby/2.0.0/rubygems/core_ext/kernel_require.rb:55:in `require': /Users/chrishandley/Challenges/Takeaway/lib/dishes.rb:3: syntax error, unexpected end-of-input, expecting :: or '[' or '.' (SyntaxError)
+	from /System/Library/Frameworks/Ruby.framework/Versions/2.0/usr/lib/ruby/2.0.0/rubygems/core_ext/kernel_require.rb:55:in `require'
+	from /Users/chrishandley/Challenges/Takeaway/spec/dishes_spec.rb:1:in `<top (required)>'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `load'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `block in load_spec_files'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `each'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/configuration.rb:1105:in `load_spec_files'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:96:in `setup'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:84:in `run'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:69:in `run'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:37:in `invoke'
+	from /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.1.7/exe/rspec:4:in `<top (required)>'
+	from /usr/bin/rspec:23:in `load'
+	from /usr/bin/rspec:23:in `<main>'
+Chriss-MacBook-Pro:Takeaway chrishandley$ rspec
+
+Menu
+  basic properties
+    has has at least one text dish name (FAILED - 1)
+
+Failures:
+
+  1) Menu basic properties has has at least one text dish name
+     Failure/Error: expect(menu.dishes.keys.first.is_a?(String)).to be(true)
+     NoMethodError:
+       undefined method `dishes' for #<Menu:0x007fcc7900b098>
+     # ./spec/dishes_spec.rb:8:in `block (3 levels) in <top (required)>'
+
+Finished in 0.00192 seconds (files took 0.14592 seconds to load)
+1 example, 1 failure
+
+Failed examples:
+
+rspec ./spec/dishes_spec.rb:7 # Menu basic properties has has at least one text dish name
+Chriss-MacBook-Pro:Takeaway chrishandley$ rspec
+
+Menu
+  basic properties
+    has has at least one text dish name (FAILED - 1)
+
+Menu
+  basic properties
+    has has at least one text dish name (FAILED - 2)
+
+Failures:
+
+  1) Menu basic properties has has at least one text dish name
+     Failure/Error: expect(menu.dishes.keys.first.is_a?(String)).to be(true)
+     NoMethodError:
+       undefined method `dishes' for #<Menu:0x007fa0ec0847d0>
+     # ./spec/dishes_spec.rb:8:in `block (3 levels) in <top (required)>'
+
+  2) Menu basic properties has has at least one text dish name
+     Failure/Error: expect(menu.dishes.keys.first.is_a?(String)).to be(true)
+     NoMethodError:
+       undefined method `dishes' for #<Menu:0x007fa0ec0eebf8>
+     # ./spec/menu_spec.rb:8:in `block (3 levels) in <top (required)>'
+
+Finished in 0.00087 seconds (files took 0.09574 seconds to load)
+2 examples, 2 failures
+
+Failed examples:
+
+rspec ./spec/dishes_spec.rb:7 # Menu basic properties has has at least one text dish name
+rspec ./spec/menu_spec.rb:7 # Menu basic properties has has at least one text dish name
+Chriss-MacBook-Pro:Takeaway chrishandley$ rspec
+
+Menu
+  basic properties
+    has has at least one text dish name
+
+Menu
+  basic properties
+    has has at least one text dish name
+
+Finished in 0.00243 seconds (files took 0.09492 seconds to load)
+2 examples, 0 failures
+Chriss-MacBook-Pro:Takeaway chrishandley$ ls
+lib		lib:twilio.rb	spec
+Chriss-MacBook-Pro:Takeaway chrishandley$ rm lib:twilio.rb
+Chriss-MacBook-Pro:Takeaway chrishandley$ ls
+lib	spec
+Chriss-MacBook-Pro:Takeaway chrishandley$ cd lib
+Chriss-MacBook-Pro:lib chrishandley$ ls
+dishes.rb		menu.rb			twilio.rb		twilio_sandbox.rb
+Chriss-MacBook-Pro:lib chrishandley$ rm dishes.rb 
+Chriss-MacBook-Pro:lib chrishandley$ cd ./spec
+-bash: cd: ./spec: No such file or directory
+Chriss-MacBook-Pro:lib chrishandley$ cd ..
+Chriss-MacBook-Pro:Takeaway chrishandley$ cd spec
+Chriss-MacBook-Pro:spec chrishandley$ ls
+dishes_spec.rb	menu_spec.rb
+Chriss-MacBook-Pro:spec chrishandley$ rm dishes_spec.rb 
+Chriss-MacBook-Pro:spec chrishandley$ ls
+menu_spec.rb
+Chriss-MacBook-Pro:spec chrishandley$ cd ..
+Chriss-MacBook-Pro:Takeaway chrishandley$ git branch
+* development
+  master
+  twilio
+Chriss-MacBook-Pro:Takeaway chrishandley$ git hist
+* 9c59284 2014-11-07 | postbox.post hello works, other methods made private (HEAD, origin/twilio, origin/development, twilio, development) [Chris Handley]
+* 50afa6a 2014-11-07 | Postbox setup with Twilio, sends test message (origin/master, master) [Chris Handley]
+Chriss-MacBook-Pro:Takeaway chrishandley$ git branch menu
+Chriss-MacBook-Pro:Takeaway chrishandley$ git checkout menu
+Switched to branch 'menu'
+Chriss-MacBook-Pro:Takeaway chrishandley$ git add lib/menu.rb 
+Chriss-MacBook-Pro:Takeaway chrishandley$ git add spec/menu_spec.rb 
+Chriss-MacBook-Pro:Takeaway chrishandley$ git commit "dishes hash one item"
+error: pathspec 'dishes hash one item' did not match any file(s) known to git.
+Chriss-MacBook-Pro:Takeaway chrishandley$ git commit -m "dishes hash one item"
+[menu 7a9cf74] dishes hash one item
+ 2 files changed, 16 insertions(+)
+ create mode 100644 lib/menu.rb
+ create mode 100644 spec/menu_spec.rb
+Chriss-MacBook-Pro:Takeaway chrishandley$ git push
+fatal: The current branch menu has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream origin menu
+
+Chriss-MacBook-Pro:Takeaway chrishandley$ git push -u origin menu
+Counting objects: 10, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (6/6), 628 bytes | 0 bytes/s, done.
+Total 6 (delta 0), reused 0 (delta 0)
+To git@github.com:chandley/takeaway.git
+ * [new branch]      menu -> menu
+Branch menu set up to track remote branch menu from origin.
+Chriss-MacBook-Pro:Takeaway chrishandley$ git status
+On branch menu
+Your branch is up-to-date with 'origin/menu'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	lib/twilio_sandbox.rb
+
+nothing added to commit but untracked files present (use "git add" to track)
+Chriss-MacBook-Pro:Takeaway chrishandley$ git status
+On branch menu
+Your branch is up-to-date with 'origin/menu'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   spec/menu_spec.rb
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	lib/twilio_sandbox.rb
+
+no changes added to commit (use "git add" and/or "git commit -a")
+Chriss-MacBook-Pro:Takeaway chrishandley$ rspec
+
+Menu
+  basic properties
+    has has at least one text dish name
+    has a price for the first item
+
+Finished in 0.00114 seconds (files took 0.09601 seconds to load)
+2 examples, 0 failures
+Chriss-MacBook-Pro:Takeaway chrishandley$ 
