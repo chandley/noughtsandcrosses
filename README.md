@@ -22,7 +22,10 @@ Classic noughts and crosses game - two players alternate at keyboard
 
 ### Solution
 
-Classes Square, Board, Player and Game. Board handles display, winner check. Player updates square directly. Game handles turns.
+* Classes Square, Board, Player and Game. 
+* Board handles display, winner check. 
+* Player updates square directly. 
+* Game handles turns.
 
 
 ### To run it
@@ -32,7 +35,7 @@ in command line
 ```
 ruby noughtcross.rb
 ```
-rows and columns are entered as numbers 1-3
+rows and columns are entered as numbers 0-2
 
 ### Tests
 
